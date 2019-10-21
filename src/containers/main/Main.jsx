@@ -1,15 +1,17 @@
 import React from 'react';
-import { Header } from '../../components/header/Header';
+import { Header } from 'components';
 import {
   Switch,
   Route,
   Link,
+  Redirect
 } from "react-router-dom";
+import { Home } from 'containers';
 
 const tabs = [
   {
     text: 'Home',
-    route: '/'
+    route: '/home'
   },
   {
     text: 'About',
@@ -40,16 +42,20 @@ export class Main extends React.Component {
       <>
         <div className="App">
           <Header>
-            { tabs.map((tab, index) => <Link key={index} to={ tab.route } className={`header--button ${this.state.selected === index ? 'selected' : 'unselected'}`} onClick={ () => this.setTab(index) }>{ tab.text }</Link>) }
+            { tabs.map((tab, index) => <Link key={ index } to={ tab.route } className={ `header--button ${this.state.selected === index ? 'selected' : 'unselected'}` } onClick={ () => this.setTab(index) }>{ tab.text }</Link>) }
           </Header>
         </div>
+        <Redirect from="/" to="/home" />
         <Switch>
-          <Route path="/about">
-            Hello
-        </Route>
-          <Route path="/blog">
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/about">
+            About
+          </Route>
+          <Route exact path="/blog">
             Blog
-        </Route>
+          </Route>
         </Switch></>
     )
   }
